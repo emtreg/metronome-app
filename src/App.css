@@ -1,3 +1,18 @@
 .App {
   text-align: center;
 }
+
+.metronome {
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 700px;
+  border: solid 1px #ccc;
+  border-radius: 4px;
+  height: auto;
+  background: #f8f8f8;
+  margin: auto;
+  text-align: center;
+}
