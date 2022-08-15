@@ -17,7 +17,6 @@ export class Slider extends React.Component {
         <p className="bpmOutput">{this.state.value} BPM</p>
         <input type="range" min="30" max="244" value={this.state.value} onChange={this.handleChange}  />
       </div>
-
     );
   }
 }
