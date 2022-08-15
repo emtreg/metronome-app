@@ -22,7 +22,7 @@
 .redBtn {
   margin: 20px;
   transition-duration: 0.1s;
-  background-color: #d65640;
+  background-color: #e95e45;
   border-radius: 8px;
   border-right: none;
   border-left: none;
@@ -38,4 +38,12 @@
   font-weight: 550;
   letter-spacing: 2px;
   cursor: pointer;
+}
+
+.greenBtn:hover {
+  background-color: #43cd5a;
+}
+
+.redBtn:hover {
+  background-color: #e15941;
 }
