@@ -8,11 +8,9 @@ export class App extends React.Component {
       <div class="App">
         <div class="metronome">
           <header>Metronome</header>
-          <StartButton></StartButton>
+          <StartButton />
         </div>
       </div>
     );
   }
 }
-
-// export default App;
