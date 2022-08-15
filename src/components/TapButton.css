@@ -17,3 +17,7 @@
   letter-spacing: 2px;
   cursor: pointer;
 }
+
+.tapBtn:hover {
+  background-color: #787a85;
+}
