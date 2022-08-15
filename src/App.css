@@ -16,3 +16,8 @@
   margin: auto;
   text-align: center;
 }
+
+.metronome header {
+  font-family: 'Oxygen', sans-serif;
+  font-size: 40px;
+}
