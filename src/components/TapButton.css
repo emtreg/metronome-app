@@ -20,4 +20,9 @@
 
 .tapBtn:hover {
   background-color: #787a85;
+  color: whitesmoke;
+}
+
+.tapBtn:active {
+  transform: translateY(2px);
 }
