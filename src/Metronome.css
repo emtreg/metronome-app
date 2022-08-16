@@ -1,8 +1,5 @@
-.App {
+.Metronome {
   text-align: center;
-}
-
-.metronome {
   min-height: 700px;
   display: flex;
   flex-direction: column;
@@ -17,7 +14,7 @@
   text-align: center;
 }
 
-.metronome header {
+.Metronome header {
   font-family: 'Oxygen', sans-serif;
   font-size: 45px;
 }

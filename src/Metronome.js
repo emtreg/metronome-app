@@ -1,15 +1,15 @@
-import './App.css';
+import './Metronome.css';
 import React from 'react';
 import { StartButton } from './components/StartButton';
 import { TapButton } from './components/TapButton';
 import { Slider } from './components/Slider';
 
 
-export class App extends React.Component {
+export class Metronome extends React.Component {
   render() {
     return (
-      <div class="App">
-        <div class="metronome">
+      <div class="Metronome">
+        <div class="container">
           <header>Metronome</header>
           <Slider />
           <StartButton />
