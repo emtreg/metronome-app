@@ -1,31 +1,40 @@
 .Metronome {
   text-align: center;
-  min-height: 700px;
+  min-height: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 700px;
-  border: solid 1px #ccc;
-  border-radius: 4px;
+  /* border: solid 1px rgb(240, 239, 239); */
+  border-radius: 20px;
   height: auto;
-  background: #f8f8f8;
+  /* background: #f3f2f2; */
   margin: auto;
-  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .Metronome header {
   font-family: 'Oxygen', sans-serif;
   font-size: 45px;
+  color:rgb(37, 37, 37);
+  margin-bottom: 40px;
 }
 
 .bpmOutput {
+  font-family: 'Oxygen', sans-serif;
   margin: 30px;
+  margin-bottom: 20px;
   font-size: 35px;
+  color: rgb(37, 37, 37);
 }
 
 .greenBtn {
-  margin: 20px;
+  margin: 30px 20px;
   transition-duration: 0.1s;
   background-color: #40d659;
   border-radius: 8px;
@@ -40,13 +49,13 @@
   display: inline-block;
   font-size: 20px;
   font-family: 'Oxygen', sans-serif;
-  font-weight: 550;
+  font-weight: 500;
   letter-spacing: 2px;
   cursor: pointer;
 }
 
 .redBtn {
-  margin: 20px;
+  margin: 30px 20px;
   transition-duration: 0.1s;
   background-color: #e95e45;
   border-radius: 8px;
@@ -61,7 +70,7 @@
   display: inline-block;
   font-size: 20px;
   font-family: 'Oxygen', sans-serif;
-  font-weight: 550;
+  font-weight: 500;
   letter-spacing: 2px;
   cursor: pointer;
 }
@@ -72,4 +81,68 @@
 
 .redBtn:hover {
   background-color: #e15941;
+}
+
+.tapBtn {
+  transition-duration: 0.1s;
+  background-color: #81838b;
+  border-radius: 8px;
+  border-right: none;
+  border-left: none;
+  border-top: none;
+  border-bottom: 4px solid #5f616b;
+  color: white;
+  padding: 15px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  font-family: 'Oxygen', sans-serif;
+  font-weight: 500;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+.tapBtn:hover {
+  background-color: #787a85;
+  color: whitesmoke;
+}
+
+.tapBtn:active {
+  transform: translateY(2px);
+}
+
+.slider-parent{
+  position:relative;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 400px;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  margin: 20px;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #0489aa;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #04AA6D;
+  cursor: pointer;
 }
