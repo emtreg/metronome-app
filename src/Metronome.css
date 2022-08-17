@@ -18,10 +18,39 @@
   transform: translate(-50%, -50%);
 }
 
+.row {
+  width: 100%;
+  margin: 0 auto;
+}
+.block {
+  display: inline-block
+}
+
+.block.plusMinusBtn {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  font-size: 25px;
+  border: 2px solid #dae2db;
+  background-color: white;
+  display: table-cell;
+  vertical-align: middle;
+  color: #929692;
+  margin-top: -7px;
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+.block.plusMinusBtn:hover {
+  color: #5d625d;
+  border: 2px solid #c2c8c2;
+  cursor: pointer;
+}
+
 .Metronome header {
   font-family: 'Oxygen', sans-serif;
   font-size: 45px;
-  color:rgb(37, 37, 37);
+  color:rgb(99, 98, 98);
   margin-bottom: 40px;
 }
 
@@ -30,13 +59,14 @@
   margin: 30px;
   margin-bottom: 20px;
   font-size: 35px;
-  color: rgb(37, 37, 37);
+  color:rgb(99, 98, 98);
 }
 
 .greenBtn {
   margin: 30px 20px;
   transition-duration: 0.1s;
   background-color: #40d659;
+  opacity: 0.8;
   border-radius: 8px;
   border-right: none;
   border-left: none;
@@ -58,6 +88,7 @@
   margin: 30px 20px;
   transition-duration: 0.1s;
   background-color: #e95e45;
+  opacity: 0.8;
   border-radius: 8px;
   border-right: none;
   border-left: none;
@@ -118,7 +149,7 @@
 
 .slider {
   -webkit-appearance: none;
-  width: 400px;
+  width: 380px;
   height: 15px;
   border-radius: 5px;
   background: #d3d3d3;
@@ -135,7 +166,7 @@
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #0489aa;
+  background: #71737a;
   cursor: pointer;
 }
 

@@ -94,6 +94,28 @@ export class Metronome extends React.Component {
     }
   }
 
+  decreaseBpm = () => {
+    let decreasedBpm = this.state.bpm - 1;
+    if (decreasedBpm > 30) {
+      if (this.state.playing) {
+        this.setState({ bpm: decreasedBpm }, this.handleBPMChange);
+      } else {
+        this.setState({ bpm: decreasedBpm });
+      }
+    }
+  }
+
+  increaseBpm = () => {
+    let increasedBpm = Number(this.state.bpm) + 1;
+    if (increasedBpm < 240) {
+      if (this.state.playing) {
+        this.setState({ bpm: increasedBpm }, this.handleBPMChange);
+      } else {
+        this.setState({ bpm: increasedBpm });
+      }
+    }
+  }
+
   //calculates bpm based on 'tap beat' button intervals
   calculateBpm = () => {
     //sum the intervals in the intervalsArr
@@ -107,7 +129,7 @@ export class Metronome extends React.Component {
     //if the bpm is greater than 240, set the final bpm to 240
     let finalBpm = bpm > 240 ? 240 : bpm;
     //update the bpm and handle change
-    this.setState({bpm: finalBpm}, this.handleBPMChange);
+    this.setState({ bpm: finalBpm }, this.handleBPMChange);
   }
 
   //begins recording intervals between 'tap beat' button clicks
@@ -145,14 +167,20 @@ export class Metronome extends React.Component {
         <div class="container">
           <header>Metronome</header>
           <p class="bpmOutput">{this.state.bpm} BPM</p>
-          <div className="slider-parent">
-            <input
-              class="slider"
-              type="range"
-              min="30"
-              max="240"
-              value={this.state.bpm}
-              onChange={this.handleChange}/>
+          <div class="row">
+            <button class="block plusMinusBtn" onClick={this.decreaseBpm}>-</button>
+            <div class="block">
+              <div className="slider-parent">
+                <input
+                  class="slider"
+                  type="range"
+                  min="30"
+                  max="240"
+                  value={this.state.bpm}
+                  onChange={this.handleChange}/>
+              </div>
+            </div>
+            <button class="block plusMinusBtn" onClick={this.increaseBpm}>+</button>
           </div>
           <button class={btn_class} onClick={this.togglePlay}>
             {this.state.playing ? 'Stop' : 'Start'}
