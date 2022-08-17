@@ -22,6 +22,5 @@ This online metronome app allows the user to play a tempo by adjusting beats per
 ## Features to Add
 
 - Allow the user to adjust the beats per measure
-- App displays a count to the screen based on the beats per measure
-- Minus and plus buttons on either side of the slider to allow the user to adjust the beats per minutes
+- Display a count showing the beats per measure
 
