@@ -9,18 +9,13 @@ export class Metronome extends React.Component {
       playing: false,
       bpm: 100,
       btnColor: "green",
-      clickTime: 0
+      lastClick: 0
     }
-    this.clickTimes = [];
+    this.intervalsArr = [];
     this.tick = new Audio(tick);
-    this.handleChange = this.handleChange.bind(this);
-    this.togglePlay = this.togglePlay.bind(this);
-    this.playTick = this.playTick.bind(this);
-    this.setClickTime = this.setClickTime.bind(this);
-    this.handleBPMChange = this.handleBPMChange.bind(this);
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     const bpm = event.target.value;
     if(this.state.playing) {
       clearInterval(this.timer);
@@ -31,9 +26,9 @@ export class Metronome extends React.Component {
     }
   }
 
-  togglePlay() {
+  togglePlay = () => {
     if(this.state.playing) {
-      this.setState({clickTime: 0});
+      this.setState({lastClick: 0});
       clearInterval(this.timer);
       this.setState({
         playing: false,
@@ -48,34 +43,34 @@ export class Metronome extends React.Component {
     }
    }
 
-  playTick() {
+  playTick = () => {
     this.tick.play();
    }
 
-  handleBPMChange() {
+  handleBPMChange = () => {
     clearInterval(this.timer);
     this.timer = setInterval(this.playTick, (60 / this.state.bpm) * 1000);
   }
 
-  setClickTime() {
+  setlastClick = () => {
     if(this.state.playing) {
       let d = new Date();
       let t = d.getTime();
-      this.setState({clickTime: t});
-      if (this.state.clickTime !== 0 && t - this.state.clickTime < 2500) {
-        console.log("Interval: " + t - this.state.clickTime);
-        if (this.clickTimes.length < 4) {
-          this.clickTimes.push(t - this.state.clickTime);
+      this.setState({lastClick: t});
+      if (this.state.lastClick !== 0 && t - this.state.lastClick < 2000) {
+        console.log("Interval: " + t - this.state.lastClick);
+        if (this.intervalsArr.length < 4) {
+          this.intervalsArr.push(t - this.state.lastClick);
         } else {
-          this.clickTimes.shift();
-          this.clickTimes.push(t - this.state.clickTime);
+          this.intervalsArr.shift();
+          this.intervalsArr.push(t - this.state.lastClick);
         }
-        console.log("Interval Array: " + this.clickTimes);
-        let sumOfIntervals = this.clickTimes.reduce((sum, interval) => {
+        console.log("Interval Array: " + this.intervalsArr);
+        let sumOfIntervals = this.intervalsArr.reduce((sum, interval) => {
           return sum + interval;
         });
         console.log("Sum: " + sumOfIntervals);
-        let averageInterval = Math.floor((sumOfIntervals / this.clickTimes.length));
+        let averageInterval = Math.floor((sumOfIntervals / this.intervalsArr.length));
         console.log("Average: " + averageInterval);
         let bpm = Math.floor((60 / (averageInterval)) * 1000);
         //add logic if BPM is less than 30
@@ -84,7 +79,7 @@ export class Metronome extends React.Component {
         console.log("Final BPM: " + finalBpm);
         this.setState({bpm: finalBpm}, this.handleBPMChange);
       } else {
-        this.clickTimes = [];
+        this.intervalsArr = [];
       }
     }
    }
@@ -102,7 +97,7 @@ export class Metronome extends React.Component {
           <button class={btn_class} onClick={this.togglePlay}>
             {this.state.playing ? 'Stop' : 'Start'}
           </button>
-          <button class="tapBtn" onClick={this.setClickTime}>Tap Beat</button>
+          <button class="tapBtn" onClick={this.setlastClick}>Tap Beat</button>
         </div>
       </div>
     );
