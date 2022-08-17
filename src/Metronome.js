@@ -26,20 +26,28 @@ export class Metronome extends React.Component {
     }
   }
 
+  stopPlaying = () => {
+    this.setState({lastClick: 0});
+    clearInterval(this.timer);
+    this.setState({
+      playing: false,
+      btnColor: "green"
+    });
+  }
+
+  startPlaying = () => {
+    this.timer = setInterval(this.playTick, (60 / this.state.bpm) * 1000);
+    this.setState({
+      playing: true,
+      btnColor: "red"
+    }, this.playTick);
+  }
+
   togglePlay = () => {
     if(this.state.playing) {
-      this.setState({lastClick: 0});
-      clearInterval(this.timer);
-      this.setState({
-        playing: false,
-        btnColor: "green"
-      });
+      this.stopPlaying();
     } else {
-      this.timer = setInterval(this.playTick, (60 / this.state.bpm) * 1000);
-      this.setState({
-        playing: true,
-        btnColor: "red"
-      }, this.playTick);
+      this.startPlaying();
     }
    }
 
@@ -52,37 +60,43 @@ export class Metronome extends React.Component {
     this.timer = setInterval(this.playTick, (60 / this.state.bpm) * 1000);
   }
 
-  setlastClick = () => {
+  setLastClick = (currentTime) => {
+    this.setState({lastClick: currentTime});
+  }
+
+  pushInterval = (interval) => {
+    if (this.intervalsArr.length < 4) {
+      this.intervalsArr.push(interval);
+    } else {
+      this.intervalsArr.shift();
+      this.intervalsArr.push(interval);
+    }
+  }
+
+  calculateBpm = () => {
+    let sumOfIntervals = this.intervalsArr.reduce((sum, interval) => {
+      return sum + interval;
+    });
+    let averageInterval = Math.floor((sumOfIntervals / this.intervalsArr.length));
+    let bpm = Math.floor((60 / (averageInterval)) * 1000);
+    let finalBpm = bpm > 240 ? 240 : bpm;
+    this.setState({bpm: finalBpm}, this.handleBPMChange);
+  }
+
+  startListening = () => {
     if(this.state.playing) {
-      let d = new Date();
-      let t = d.getTime();
-      this.setState({lastClick: t});
-      if (this.state.lastClick !== 0 && t - this.state.lastClick < 2000) {
-        console.log("Interval: " + t - this.state.lastClick);
-        if (this.intervalsArr.length < 4) {
-          this.intervalsArr.push(t - this.state.lastClick);
-        } else {
-          this.intervalsArr.shift();
-          this.intervalsArr.push(t - this.state.lastClick);
-        }
-        console.log("Interval Array: " + this.intervalsArr);
-        let sumOfIntervals = this.intervalsArr.reduce((sum, interval) => {
-          return sum + interval;
-        });
-        console.log("Sum: " + sumOfIntervals);
-        let averageInterval = Math.floor((sumOfIntervals / this.intervalsArr.length));
-        console.log("Average: " + averageInterval);
-        let bpm = Math.floor((60 / (averageInterval)) * 1000);
-        //add logic if BPM is less than 30
-        let finalBpm = bpm > 240 ? 240 : bpm;
-        console.log("BPM: " + bpm);
-        console.log("Final BPM: " + finalBpm);
-        this.setState({bpm: finalBpm}, this.handleBPMChange);
+      let currentDate = new Date();
+      let currentTime = currentDate.getTime();
+      this.setLastClick(currentTime);
+      let interval = currentTime - this.state.lastClick;
+      if (this.state.lastClick !== 0 && interval < 2000) {
+        this.pushInterval(interval);
+        this.calculateBpm();
       } else {
         this.intervalsArr = [];
       }
     }
-   }
+  }
 
   render() {
     let btn_class = this.state.btnColor === "green" ? "greenBtn" : "redBtn";
@@ -92,12 +106,18 @@ export class Metronome extends React.Component {
           <header>Metronome</header>
           <p class="bpmOutput">{this.state.bpm} BPM</p>
           <div className="slider-parent">
-            <input class="slider" type="range" min="30" max="240" value={this.state.bpm} onChange={this.handleChange}/>
+            <input
+              class="slider"
+              type="range"
+              min="30"
+              max="240"
+              value={this.state.bpm}
+              onChange={this.handleChange}/>
           </div>
           <button class={btn_class} onClick={this.togglePlay}>
             {this.state.playing ? 'Stop' : 'Start'}
           </button>
-          <button class="tapBtn" onClick={this.setlastClick}>Tap Beat</button>
+          <button class="tapBtn" onClick={this.startListening}>Tap Beat</button>
         </div>
       </div>
     );
