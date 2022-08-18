@@ -2,12 +2,12 @@
 
 ## Built with React
 
-## To Run:
+<!-- ## To Run:
 
 1. Download metronome-app
 2. Navigate to folder on local drive
 3. Run 'npm start' command in terminal
-4. Open http://localhost:3000/ in browser
+4. Open http://localhost:3000/ in browser -->
 
 ## Description
 
