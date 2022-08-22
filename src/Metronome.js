@@ -9,7 +9,9 @@ export class Metronome extends React.Component {
       playing: false,
       bpm: 100,
       btnColor: "green",
-      lastClick: 0
+      lastClick: 0,
+      displayCount: false,
+      count: 0
     }
     this.intervalsArr = [];
     this.tick = new Audio(tick);
@@ -24,11 +26,20 @@ export class Metronome extends React.Component {
       //if playing, reset the timer with the new bpm
       clearInterval(this.timer);
       this.timer = setInterval(this.playTick, (60 / bpm) * 1000);
-      //set the new bpm
-      this.setState({ bpm: bpm });
+      //set the new bpm and reset the beats per measure count
+      this.setState({
+        bpm: bpm,
+        displayCount: false,
+        count: 0
+       });
     } else {
       //if not playing, update the bpm with the new slider value
-      this.setState({ bpm: bpm });
+      //reset the beats per measure count
+      this.setState({
+        bpm: bpm,
+        displayCount: false,
+        count: 0
+       });
     }
   }
 
@@ -39,19 +50,26 @@ export class Metronome extends React.Component {
     //clears the timer interval
     clearInterval(this.timer);
     //changes the playing state to false and the Start/Stop button color to green
+    //resets the beats per measure count
     this.setState({
       playing: false,
-      btnColor: "green"
+      btnColor: "green",
+      displayCount: false,
+      count: 0
     });
   }
 
+  //starts the metronome
   startPlaying = () => {
     //create a new timer with the current bpm
     this.timer = setInterval(this.playTick, (60 / this.state.bpm) * 1000);
-    //changes the playing state to false and the Start/Stop button color to green
+    //changes the playing state to true and the Start/Stop button color to red
+    //resets the beats per measure count
     this.setState({
       playing: true,
-      btnColor: "red"
+      btnColor: "red",
+      displayCount: true,
+      count: 0
     }, this.playTick); //begins playing metronome right after state is updated
   }
 
@@ -64,9 +82,21 @@ export class Metronome extends React.Component {
     }
    }
 
-   //plays a tick noise
+   //plays audio
+   //resets the beats per measure
   playTick = () => {
     this.tick.play();
+    //if current beat equals 4, reset the count to 1
+    if (this.state.count === 4) {
+      this.setState({
+        displayCount: true,
+        count: 1});
+    } else {
+      //if current beat isn't 4, increase beat to be displayed by 1
+      this.setState({
+        displayCount: true,
+        count: this.state.count + 1});
+    }
    }
 
   //handles bpm changes when user taps the beat
@@ -94,24 +124,46 @@ export class Metronome extends React.Component {
     }
   }
 
+  //decreases the bpm by 1
   decreaseBpm = () => {
     let decreasedBpm = this.state.bpm - 1;
+    //only decrease the bpm if current bpm is greater than 30
+    //reset the beats per measure count
     if (decreasedBpm > 30) {
       if (this.state.playing) {
-        this.setState({ bpm: decreasedBpm }, this.handleBPMChange);
+        this.setState({
+          bpm: decreasedBpm,
+          displayCount: false,
+          count: 0
+         }, this.handleBPMChange);
       } else {
-        this.setState({ bpm: decreasedBpm });
+        this.setState({
+          bpm: decreasedBpm,
+          displayCount: false,
+          count: 0
+         });
       }
     }
   }
 
+  //increases the bpm by 1
   increaseBpm = () => {
     let increasedBpm = Number(this.state.bpm) + 1;
+    //only increase the bpm if current bpm is less than 240
+    //reset the beats per measure count
     if (increasedBpm < 240) {
       if (this.state.playing) {
-        this.setState({ bpm: increasedBpm }, this.handleBPMChange);
+        this.setState({
+          bpm: increasedBpm,
+          displayCount: false,
+          count: 0
+         }, this.handleBPMChange);
       } else {
-        this.setState({ bpm: increasedBpm });
+        this.setState({
+          bpm: increasedBpm,
+          displayCount: false,
+          count: 0
+         });
       }
     }
   }
@@ -129,7 +181,11 @@ export class Metronome extends React.Component {
     //if the bpm is greater than 240, set the final bpm to 240
     let finalBpm = bpm > 240 ? 240 : bpm;
     //update the bpm and handle change
-    this.setState({ bpm: finalBpm }, this.handleBPMChange);
+    this.setState({
+      bpm: finalBpm,
+      displayCount: false,
+      count: 0
+     }, this.handleBPMChange);
   }
 
   //begins recording intervals between 'tap beat' button clicks
@@ -162,10 +218,12 @@ export class Metronome extends React.Component {
   render() {
     //changes the class name for the start/stop button to update css styling
     let btn_class = this.state.btnColor === "green" ? "greenBtn" : "redBtn";
+    // let counter_id = this.state.count === 1 ? "greenCount" : "blackCount";
     return (
       <div class="Metronome">
         <div class="container">
           <header>Metronome</header>
+          <div class="beatCounter">{this.state.displayCount ? this.state.count : "--"}</div>
           <p class="bpmOutput">{this.state.bpm} BPM</p>
           <div class="row">
             <button class="block plusMinusBtn" onClick={this.decreaseBpm}>-</button>

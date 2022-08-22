@@ -6,10 +6,8 @@
   align-items: center;
   justify-content: center;
   width: 700px;
-  /* border: solid 1px rgb(240, 239, 239); */
   border-radius: 20px;
   height: auto;
-  /* background: #f3f2f2; */
   margin: auto;
   position: absolute;
   top: 50%;
@@ -51,7 +49,7 @@
   font-family: 'Oxygen', sans-serif;
   font-size: 45px;
   color:rgb(99, 98, 98);
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .bpmOutput {
@@ -176,4 +174,11 @@
   border-radius: 50%;
   background: #04AA6D;
   cursor: pointer;
+}
+
+.beatCounter {
+  font-family: 'Oxygen', sans-serif;
+  color:rgb(99, 98, 98);
+  font-size: 35px;
+  transition: opacity 1s ease;
 }
